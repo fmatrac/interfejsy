@@ -1,0 +1,7 @@
+/Users/filipmatracki/Programming/cpp/interfejsy/projekt/build/CMakeFiles/MaskOverlay.dir
+/Users/filipmatracki/Programming/cpp/interfejsy/projekt/build/CMakeFiles/edit_cache.dir
+/Users/filipmatracki/Programming/cpp/interfejsy/projekt/build/CMakeFiles/rebuild_cache.dir
+/Users/filipmatracki/Programming/cpp/interfejsy/projekt/build/CMakeFiles/list_install_components.dir
+/Users/filipmatracki/Programming/cpp/interfejsy/projekt/build/CMakeFiles/install.dir
+/Users/filipmatracki/Programming/cpp/interfejsy/projekt/build/CMakeFiles/install/local.dir
+/Users/filipmatracki/Programming/cpp/interfejsy/projekt/build/CMakeFiles/install/strip.dir
