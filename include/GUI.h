@@ -5,13 +5,11 @@
 #include <vector>
 #include <string>
 #include <optional>
+#include <functional>
 #include "BlendMode.h"
 
 namespace MaskOverlay {
 
-/**
- * Klasa reprezentująca przycisk GUI
- */
 class Button {
 public:
     Button(const sf::Vector2f& position, const sf::Vector2f& size, 
@@ -52,9 +50,6 @@ private:
     sf::Color m_disabledColor;
 };
 
-/**
- * Klasa reprezentująca suwak
- */
 class Slider {
 public:
     Slider(const sf::Vector2f& position, float width, 
@@ -86,9 +81,6 @@ private:
     void updateThumbPosition();
 };
 
-/**
- * Klasa reprezentująca wybór koloru
- */
 class ColorPicker {
 public:
     ColorPicker(const sf::Vector2f& position, const sf::Font& font);
@@ -113,18 +105,12 @@ private:
     void updatePreview();
 };
 
-/**
- * Struktura przechowująca elementy panelu bocznego
- */
 struct GUIPanel {
     sf::RectangleShape background;
     std::vector<Button> buttons;
     std::optional<sf::Text> title;
 };
 
-/**
- * Klasa główna GUI
- */
 class GUI {
 public:
     GUI(sf::RenderWindow& window, const sf::Font& font);
@@ -135,7 +121,6 @@ public:
     void handleResize();
     void update();
 
-    // Callbacks
     void setOnLoadSource(std::function<void()> callback);
     void setOnLoadMask(std::function<void()> callback);
     void setOnSaveResult(std::function<void()> callback);
@@ -146,7 +131,6 @@ public:
     void setOnMaskSelect(std::function<void(size_t)> callback);
     void setOnMaskOffsetChange(std::function<void(int, int)> callback);
 
-    // Ustawienia
     void setHasSource(bool has);
     void setHasMask(bool has);
     void setHasResult(bool has);
@@ -157,61 +141,46 @@ public:
     void setSourceSize(const sf::Vector2u& size);
     void setMaskSize(const sf::Vector2u& size);
 
-    // Miniaturki masek
     void setMaskThumbnails(const std::vector<std::pair<std::string, sf::Texture>>& masks);
 
-    // Obszar podglądu
     sf::FloatRect getPreviewArea() const;
 
-    // Informacja o statusie
     void setStatusMessage(const std::string& message);
 
-    // Aktualny tryb nakładania
     BlendModeType getCurrentBlendMode() const;
 
-    // Aktualny kolor przezroczysty
     sf::Color getTransparentColor() const;
 
-    // Czy używać alfa
     bool getUseAlpha() const;
 
 private:
     sf::RenderWindow& m_window;
     const sf::Font& m_font;
 
-    // Panele
     GUIPanel m_leftPanel;
     GUIPanel m_rightPanel;
     sf::RectangleShape m_topBar;
     sf::RectangleShape m_bottomBar;
 
-    // Przyciski główne
     std::vector<Button> m_mainButtons;
     
-    // Przyciski trybów
     std::vector<Button> m_modeButtons;
     
-    // Wybór koloru przezroczystego
     std::unique_ptr<ColorPicker> m_colorPicker;
 
-    // Checkbox alfa
     Button* m_alphaCheckbox;
 
-    // Przesunięcie maski
     Slider* m_offsetXSlider;
     Slider* m_offsetYSlider;
 
-    // Miniaturki masek
     std::vector<sf::Sprite> m_maskSprites;
     std::vector<sf::Texture> m_maskTextures;
     int m_selectedMaskIndex;
     float m_maskScrollOffset;
 
-    // Status
     std::optional<sf::Text> m_statusText;
     std::optional<sf::Text> m_sizeInfoText;
 
-    // Callbacki
     std::function<void()> m_onLoadSource;
     std::function<void()> m_onLoadMask;
     std::function<void()> m_onSaveResult;
@@ -222,7 +191,6 @@ private:
     std::function<void(size_t)> m_onMaskSelect;
     std::function<void(int, int)> m_onMaskOffsetChange;
 
-    // Stan
     bool m_hasSource;
     bool m_hasMask;
     bool m_hasResult;
@@ -241,4 +209,4 @@ private:
     void updateLayout();
 };
 
-} // namespace MaskOverlay
+}

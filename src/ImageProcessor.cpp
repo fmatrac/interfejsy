@@ -37,7 +37,7 @@ bool ImageProcessor::loadMask(const std::string& path) {
     m_hasResult = false;
     updateMaskTexture();
     
-    // Resetuj przesunięcie przy wczytaniu nowej maski
+
     resetMaskOffset();
     
     std::cout << "Wczytano maskę: " << path 
@@ -57,19 +57,19 @@ void ImageProcessor::applyMask(BlendModeType mode,
     sf::Vector2u sourceSize = m_sourceImage.getSize();
     sf::Vector2u maskSize = m_maskImage.getSize();
     
-    // Utwórz obraz wynikowy o rozmiarze źródłowym
+
     m_resultImage.resize(sf::Vector2u(sourceSize.x, sourceSize.y), sf::Color::Transparent);
     
-    // Przetwarzaj każdy piksel
+
     for (unsigned int y = 0; y < sourceSize.y; ++y) {
         for (unsigned int x = 0; x < sourceSize.x; ++x) {
             sf::Color sourcePixel = m_sourceImage.getPixel(sf::Vector2u(x, y));
             
-            // Oblicz pozycję w masce z uwzględnieniem przesunięcia
+
             int maskX = static_cast<int>(x) + m_maskOffset.x;
             int maskY = static_cast<int>(y) + m_maskOffset.y;
             
-            // Sprawdź czy pozycja jest w granicach maski
+
             if (maskX >= 0 && maskX < static_cast<int>(maskSize.x) &&
                 maskY >= 0 && maskY < static_cast<int>(maskSize.y)) {
                 
@@ -78,14 +78,14 @@ void ImageProcessor::applyMask(BlendModeType mode,
                     static_cast<unsigned int>(maskY)
                 ));
                 
-                // Nakładaj maskę
+
                 sf::Color resultPixel = BlendMode::blend(
                     sourcePixel, maskPixel, mode, transparentColor, useAlpha
                 );
                 
                 m_resultImage.setPixel(sf::Vector2u(x, y), resultPixel);
             } else {
-                // Poza maską - użyj oryginalnego piksela
+
                 m_resultImage.setPixel(sf::Vector2u(x, y), sourcePixel);
             }
         }
@@ -182,4 +182,4 @@ void ImageProcessor::updateResultTexture() {
     }
 }
 
-} // namespace MaskOverlay
+}

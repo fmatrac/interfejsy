@@ -6,7 +6,7 @@
 
 namespace MaskOverlay {
 
-// ==================== Button ====================
+
 
 Button::Button(const sf::Vector2f& position, const sf::Vector2f& size, 
                const std::string& label, const sf::Font& font)
@@ -28,7 +28,7 @@ Button::Button(const sf::Vector2f& position, const sf::Vector2f& size,
     m_text.emplace(font, label, 14);
     m_text->setFillColor(sf::Color::White);
     
-    // Wyśrodkuj tekst
+
     sf::FloatRect textBounds = m_text->getLocalBounds();
     m_text->setOrigin({textBounds.position.x + textBounds.size.x / 2,
                        textBounds.position.y + textBounds.size.y / 2});
@@ -128,7 +128,7 @@ void Button::update(const sf::Vector2f& mousePos) {
     }
 }
 
-// ==================== Slider ====================
+
 
 Slider::Slider(const sf::Vector2f& position, float width,
                float minValue, float maxValue, const sf::Font& font,
@@ -176,7 +176,7 @@ bool Slider::handleEvent(const sf::Vector2f& mousePos, bool mousePressed, bool m
             m_track.getGlobalBounds().contains(mousePos)) {
             m_dragging = true;
             
-            // Ustaw wartość na pozycję kliknięcia
+
             float trackX = m_track.getPosition().x;
             float trackWidth = m_track.getSize().x;
             float relativeX = std::clamp(mousePos.x - trackX, 0.0f, trackWidth);
@@ -234,7 +234,7 @@ void Slider::updateThumbPosition() {
     }
 }
 
-// ==================== ColorPicker ====================
+
 
 ColorPicker::ColorPicker(const sf::Vector2f& position, const sf::Font& font)
     : m_position(position)
@@ -255,7 +255,7 @@ ColorPicker::ColorPicker(const sf::Vector2f& position, const sf::Font& font)
     m_blueSlider = std::make_unique<Slider>(sf::Vector2f(position.x, position.y + 120), 150, 0, 255, font, "B:");
     m_alphaSlider = std::make_unique<Slider>(sf::Vector2f(position.x, position.y + 165), 150, 0, 255, font, "A:");
     
-    // Ustaw domyślny kolor (magenta - często używany jako przezroczysty)
+
     m_redSlider->setValue(255);
     m_greenSlider->setValue(0);
     m_blueSlider->setValue(255);
@@ -311,7 +311,7 @@ void ColorPicker::updatePreview() {
     m_preview.setFillColor(m_color);
 }
 
-// ==================== GUI ====================
+
 
 GUI::GUI(sf::RenderWindow& window, const sf::Font& font)
     : m_window(window)
@@ -342,32 +342,32 @@ GUI::GUI(sf::RenderWindow& window, const sf::Font& font)
 void GUI::initializePanels() {
     sf::Vector2u windowSize = m_window.getSize();
     
-    // Lewy panel (przyciski główne i tryby)
+
     m_leftPanel.background.setSize(sf::Vector2f(250, static_cast<float>(windowSize.y)));
     m_leftPanel.background.setPosition({0, 0});
     m_leftPanel.background.setFillColor(sf::Color(40, 40, 45));
     
-    // Prawy panel (biblioteka masek)
+
     m_rightPanel.background.setSize(sf::Vector2f(200, static_cast<float>(windowSize.y)));
     m_rightPanel.background.setPosition({static_cast<float>(windowSize.x - 200), 0});
     m_rightPanel.background.setFillColor(sf::Color(40, 40, 45));
     
-    // Górny pasek
+
     m_topBar.setSize(sf::Vector2f(static_cast<float>(windowSize.x), 40));
     m_topBar.setPosition({0, 0});
     m_topBar.setFillColor(sf::Color(30, 30, 35));
     
-    // Dolny pasek (status)
+
     m_bottomBar.setSize(sf::Vector2f(static_cast<float>(windowSize.x), 30));
     m_bottomBar.setPosition({0, static_cast<float>(windowSize.y - 30)});
     m_bottomBar.setFillColor(sf::Color(30, 30, 35));
     
-    // Tekst statusu
+
     m_statusText.emplace(m_font, "Gotowy", 12);
     m_statusText->setFillColor(sf::Color(200, 200, 200));
     m_statusText->setPosition({260, static_cast<float>(windowSize.y - 22)});
     
-    // Informacje o rozmiarach
+
     m_sizeInfoText.emplace(m_font, "", 11);
     m_sizeInfoText->setFillColor(sf::Color(150, 150, 150));
     m_sizeInfoText->setPosition({15, static_cast<float>(windowSize.y - 70)});
@@ -380,7 +380,7 @@ void GUI::initializeButtons() {
     float spacing = 10;
     float x = 15;
     
-    // Przyciski główne
+
     m_mainButtons.emplace_back(
         sf::Vector2f(x, startY),
         sf::Vector2f(buttonWidth, buttonHeight),
@@ -411,7 +411,7 @@ void GUI::initializeButtons() {
     );
     m_mainButtons[3].setEnabled(false);
     
-    // Checkbox alfa
+
     m_mainButtons.emplace_back(
         sf::Vector2f(x, startY + 4 * (buttonHeight + spacing) + 20),
         sf::Vector2f(buttonWidth, buttonHeight),
@@ -428,7 +428,7 @@ void GUI::initializeModeButtons() {
     float spacing = 5;
     float x = 15;
     
-    // Tytuł sekcji
+
     m_leftPanel.title.emplace(m_font, "Tryb nakladania:", 13);
     m_leftPanel.title->setFillColor(sf::Color(200, 200, 200));
     m_leftPanel.title->setPosition({x, startY - 25});
@@ -455,7 +455,7 @@ void GUI::initializeModeButtons() {
         }
     }
     
-    // Pierwszy tryb domyślnie wybrany
+
     if (!m_modeButtons.empty()) {
         m_modeButtons[0].setSelected(true);
     }
@@ -466,7 +466,7 @@ void GUI::initializeColorPicker() {
 }
 
 void GUI::initializeSliders() {
-    // Suwaki będą inicjalizowane gdy będzie potrzebne przesunięcie maski
+
 }
 
 void GUI::updateLayout() {
@@ -489,38 +489,38 @@ void GUI::updateLayout() {
 }
 
 void GUI::draw() {
-    // Panele
+
     m_window.draw(m_leftPanel.background);
     m_window.draw(m_rightPanel.background);
     m_window.draw(m_bottomBar);
     
-    // Tytuł biblioteki masek
+
     sf::Text libraryTitle(m_font, "Biblioteka masek:", 13);
     libraryTitle.setFillColor(sf::Color(200, 200, 200));
     libraryTitle.setPosition({m_rightPanel.background.getPosition().x + 10, 50});
     m_window.draw(libraryTitle);
     
-    // Tytuł sekcji trybów
+
     if (m_leftPanel.title) {
         m_window.draw(*m_leftPanel.title);
     }
     
-    // Przyciski główne
+
     for (auto& btn : m_mainButtons) {
         btn.draw(m_window);
     }
     
-    // Przyciski trybów
+
     for (auto& btn : m_modeButtons) {
         btn.draw(m_window);
     }
     
-    // Color picker
+
     if (m_colorPicker) {
         m_colorPicker->draw(m_window);
     }
     
-    // Miniaturki masek
+
     float maskStartY = 80;
     float maskX = m_rightPanel.background.getPosition().x + 10;
     float maskSpacing = 75;
@@ -531,7 +531,7 @@ void GUI::draw() {
         if (y > 50 && y < m_window.getSize().y - 100) {
             m_maskSprites[i].setPosition({maskX, y});
             
-            // Podświetlenie wybranej maski
+
             if (static_cast<int>(i) == m_selectedMaskIndex) {
                 sf::RectangleShape highlight;
                 highlight.setPosition({maskX - 5, y - 5});
@@ -546,13 +546,13 @@ void GUI::draw() {
         }
     }
     
-    // Status
+
     if (m_statusText) m_window.draw(*m_statusText);
     if (m_sizeInfoText) m_window.draw(*m_sizeInfoText);
 }
 
 void GUI::handleMouseClick(const sf::Vector2f& mousePos) {
-    // Przyciski główne
+
     if (m_mainButtons[0].isClicked(mousePos) && m_onLoadSource) {
         m_onLoadSource();
     }
@@ -573,11 +573,11 @@ void GUI::handleMouseClick(const sf::Vector2f& mousePos) {
         }
     }
     
-    // Przyciski trybów
+
     auto modes = BlendMode::getAllModes();
     for (size_t i = 0; i < m_modeButtons.size() && i < modes.size(); ++i) {
         if (m_modeButtons[i].isClicked(mousePos)) {
-            // Odznacz wszystkie
+
             for (auto& btn : m_modeButtons) {
                 btn.setSelected(false);
             }
@@ -590,7 +590,7 @@ void GUI::handleMouseClick(const sf::Vector2f& mousePos) {
         }
     }
     
-    // Wybór maski z biblioteki
+
     float maskStartY = 80;
     float maskX = m_rightPanel.background.getPosition().x + 10;
     float maskSpacing = 75;
@@ -608,7 +608,7 @@ void GUI::handleMouseClick(const sf::Vector2f& mousePos) {
         }
     }
     
-    // Color picker - handle jako mouse pressed
+
     if (m_colorPicker) {
         if (m_colorPicker->handleEvent(mousePos, true, false)) {
             m_transparentColor = m_colorPicker->getColor();
@@ -642,7 +642,7 @@ void GUI::update() {
         btn.update(mousePos);
     }
     
-    // Update color picker dragging
+
     if (m_colorPicker) {
         bool leftPressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
         if (m_colorPicker->handleEvent(mousePos, false, !leftPressed)) {
@@ -764,7 +764,7 @@ void GUI::setMaskThumbnails(const std::vector<std::pair<std::string, sf::Texture
     for (size_t i = 0; i < m_maskTextures.size(); ++i) {
         sf::Sprite sprite(m_maskTextures[i]);
         
-        // Skaluj do miniaturki
+
         sf::Vector2u texSize = m_maskTextures[i].getSize();
         float scale = std::min(64.0f / texSize.x, 64.0f / texSize.y);
         sprite.setScale({scale, scale});
@@ -775,9 +775,9 @@ void GUI::setMaskThumbnails(const std::vector<std::pair<std::string, sf::Texture
 
 sf::FloatRect GUI::getPreviewArea() const {
     return sf::FloatRect(
-        {250, 0},  // position - Po lewym panelu
-        {static_cast<float>(m_window.getSize().x - 450),   // size.x - Minus oba panele
-         static_cast<float>(m_window.getSize().y - 30)}    // size.y - Minus dolny pasek
+        {250, 0},
+        {static_cast<float>(m_window.getSize().x - 450),
+         static_cast<float>(m_window.getSize().y - 30)}
     );
 }
 
@@ -799,4 +799,4 @@ bool GUI::getUseAlpha() const {
     return m_useAlpha;
 }
 
-} // namespace MaskOverlay
+}

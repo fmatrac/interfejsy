@@ -22,7 +22,7 @@ void MaskLibrary::scanDirectory(const std::string& directory) {
             }
         }
         
-        // Sortuj maski alfabetycznie
+
         std::sort(m_masks.begin(), m_masks.end(), 
             [](const MaskEntry& a, const MaskEntry& b) {
                 return a.name < b.name;
@@ -45,7 +45,7 @@ void MaskLibrary::addMask(const std::string& path) {
     entry.name = std::filesystem::path(path).stem().string();
     entry.loaded = false;
     
-    // Załaduj miniaturkę
+
     loadThumbnail(entry);
     
     m_masks.push_back(std::move(entry));
@@ -58,10 +58,10 @@ void MaskLibrary::loadThumbnail(MaskEntry& entry) {
         return;
     }
     
-    // Skaluj do rozmiaru miniaturki
+
     sf::Vector2u originalSize = image.getSize();
     
-    // Oblicz współczynnik skalowania (zachowaj proporcje)
+
     float scaleX = static_cast<float>(m_thumbnailSize) / originalSize.x;
     float scaleY = static_cast<float>(m_thumbnailSize) / originalSize.y;
     float scale = std::min(scaleX, scaleY);
@@ -69,7 +69,7 @@ void MaskLibrary::loadThumbnail(MaskEntry& entry) {
     unsigned int newWidth = static_cast<unsigned int>(originalSize.x * scale);
     unsigned int newHeight = static_cast<unsigned int>(originalSize.y * scale);
     
-    // Utwórz skalowany obraz (proste skalowanie - można użyć lepszego algorytmu)
+
     sf::Image thumbnail;
     thumbnail.resize(sf::Vector2u(newWidth, newHeight));
     
@@ -126,10 +126,10 @@ bool MaskLibrary::isImageFile(const std::string& path) const {
     std::filesystem::path filePath(path);
     std::string ext = filePath.extension().string();
     
-    // Konwertuj na małe litery
+
     std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
     
     return (ext == ".bmp" || ext == ".png" || ext == ".jpg" || ext == ".jpeg");
 }
 
-} // namespace MaskOverlay
+}

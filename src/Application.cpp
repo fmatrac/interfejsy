@@ -514,4 +514,4 @@ void Application::setStatusMessage(const std::string& message) {
     std::cout << "[STATUS] " << message << std::endl;
 }
 
-} // namespace MaskOverlay
+}
